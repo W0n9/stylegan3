@@ -24,12 +24,13 @@ Compatibility:
 - Improved compatibility with Ampere GPUs and newer versions of PyTorch, CuDNN, etc.
 
 ## Image cleanup Ubuntu
+```Bash
 sudo apt update
-
 sudo apt install imagemagick
 
-Convert *.png files to RBG format
-- mogrify -type TrueColor -colorspace RGB *.png 
+# Convert *.png files to RBG format
+$ mogrify -type TrueColor -colorspace RGB *.png 
+```
 
 ## Synthetic image detection
 
