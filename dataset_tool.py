@@ -124,8 +124,8 @@ def open_image_zip(source, *, max_images: Optional[int]):
 #----------------------------------------------------------------------------
 
 def open_lmdb(lmdb_dir: str, *, max_images: Optional[int]):
-    import cv2  # pip install opencv-python # pylint: disable=import-error
-    import lmdb  # pip install lmdb # pylint: disable=import-error
+    import cv2 # type: ignore  # pip install opencv-python # pylint: disable=import-error 
+    import lmdb # type: ignore  # pip install lmdb # pylint: disable=import-error 
 
     with lmdb.open(lmdb_dir, readonly=True, lock=False).begin(write=False) as txn:
         max_idx = maybe_min(txn.stat()['entries'], max_images)

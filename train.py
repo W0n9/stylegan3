@@ -22,6 +22,9 @@ from metrics import metric_main
 from torch_utils import training_stats
 from torch_utils import custom_ops
 
+# For control which GPU to use
+# os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+
 #----------------------------------------------------------------------------
 
 def subprocess_fn(rank, c, temp_dir):
