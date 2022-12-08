@@ -148,7 +148,8 @@ def generate_images_grid(
         G = legacy.load_network_pkl(f)["G_ema"].to(device)  # type: ignore
 
     os.makedirs(outdir, exist_ok=True)
-    os.makedirs(os.path.join(outdir, str(class_idx)), exist_ok=True)
+    if class_idx is not None:
+        os.makedirs(os.path.join(outdir, str(class_idx)), exist_ok=True)
     psi_filename = int(truncation_psi * 10)
 
     # Labels.
@@ -187,7 +188,10 @@ def generate_images_grid(
         else:
             grid = np.concatenate((grid, img.cpu().numpy()))
 
-    save_image_grid(grid, f"{outdir}/{class_idx}/{psi_filename}.jpg", (30, 16))
+    if class_idx is None:
+        save_image_grid(grid, f"{outdir}/{psi_filename}.jpg", (30, 16))
+    else:
+        save_image_grid(grid, f"{outdir}/{class_idx}/{psi_filename}.jpg", (30, 16))
 
 
 # ----------------------------------------------------------------------------

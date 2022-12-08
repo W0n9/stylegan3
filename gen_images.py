@@ -108,6 +108,9 @@ def generate_images(
         G = legacy.load_network_pkl(f)['G_ema'].to(device) # type: ignore
 
     os.makedirs(outdir, exist_ok=True)
+    if class_idx is not None:
+        os.makedirs(os.path.join(outdir, str(class_idx)), exist_ok=True)
+    # psi_filename = int(truncation_psi * 10)
 
     # Labels.
     label = torch.zeros([1, G.c_dim], device=device)
@@ -134,7 +137,10 @@ def generate_images(
 
         img = G(z, label, truncation_psi=truncation_psi, noise_mode=noise_mode)
         img: torch.Tensor = (img.permute(0, 2, 3, 1) * 127.5 + 128).clamp(0, 255).to(torch.uint8)
-        PIL.Image.fromarray(img[0].cpu().numpy(), 'RGB').save(f'{outdir}/seed{seed:04d}.jpg')
+        if class_idx is None:
+            PIL.Image.fromarray(img[0].cpu().numpy(), 'RGB').save(f'{outdir}/seed{seed:04d}.jpg')
+        else:
+            PIL.Image.fromarray(img[0].cpu().numpy(), 'RGB').save(f'{outdir}/{class_idx}/seed{seed:04d}.jpg')
 
 
 #----------------------------------------------------------------------------
